@@ -28,27 +28,39 @@ void sendStop(){
 
 // 1Byteのデータ送信
 void sendData(uint8_t data){
-  digitalWrite(PIN_SCLK, LOW);
   for (int i = 0; i < 8; i++) {
-    digitalWrite(PIN_DIN, (data & 0x01) ? HIGH : LOW);
-    digitalWrite(PIN_SCLK, HIGH);
     digitalWrite(PIN_SCLK, LOW);
+    delayMicroseconds(1);
+    digitalWrite(PIN_DIN, (data & 0x01) ? HIGH : LOW);
+    delayMicroseconds(1);
+    digitalWrite(PIN_SCLK, HIGH);
+    delayMicroseconds(1);
     data >>= 1;
   }
+  delayMicroseconds(1);
+  digitalWrite(PIN_SCLK, LOW);
+  digitalWrite(PIN_DIN, LOW);
+  delayMicroseconds(1);
 }
 
 // nByteのデータ送信
 void sendDataN(int dataNum,uint8_t data[]){
-  digitalWrite(PIN_SCLK, LOW);
   for (int n=0;n<dataNum;n++) {
     uint8_t data1 = data[n];
     for (int i = 0; i < 8; i++) {
-      digitalWrite(PIN_DIN, (data1 & 0x01) ? HIGH : LOW);
-      digitalWrite(PIN_SCLK, HIGH);
       digitalWrite(PIN_SCLK, LOW);
+      delayMicroseconds(1);
+      digitalWrite(PIN_DIN, (data1 & 0x01) ? HIGH : LOW);
+      delayMicroseconds(1);
+      digitalWrite(PIN_SCLK, HIGH);
+      delayMicroseconds(1);
       data1 >>= 1;
     }
   }
+  delayMicroseconds(1);
+  digitalWrite(PIN_SCLK, LOW);
+  digitalWrite(PIN_DIN, LOW);
+  delayMicroseconds(1);
 }
 
 // コマンド送信
